@@ -5,6 +5,7 @@ extension List {
      P03 (*) Find the Kth element of a linked list.
      http://www.enekoalonso.com/projects/99-swift-problems/#p03
      - note: returns nil if index is invalid
+     - parameter index: index of element to return value for, must not be negative
      - returns: T at given index
      - author: Tai Heng (github: taiheng)
      - complexity: O(n)
