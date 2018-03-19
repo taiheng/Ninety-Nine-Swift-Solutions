@@ -10,20 +10,31 @@ extension List where T: Equatable {
      - complexity: O(n)
      */
     func encodeModified() -> List<Any> {
-        let compacted = pack()
-        var iterator: List<List<T>>? = compacted
-        var encodedHead: List<Any> = List<(Int, T)>((compacted.value.length, compacted.value.value))
-        var encodedTail: List<Any> = encodedHead
-        
+        let encoded = encode()
+        var iterator: List<(Int, T)>? = encoded.nextItem
+        let newHead: List<Any> = createEncodeModifiedNode(from: encoded)
+        var newTail: List<Any> = newHead
+
         while iterator != nil {
             defer { iterator = iterator?.nextItem }
-            
-            guard let currentNode = iterator else { break }
-            let newNode = List<(Int, T)>((currentNode.value.length, currentNode.value.value))
-            encodedTail.nextItem = newNode
-            encodedTail = newNode
+
+            guard let current = iterator else { continue }
+            let newNode = createEncodeModifiedNode(from: current)
+            newTail.nextItem = newNode
+            newTail = newNode
         }
-        
-        return encodedHead
+
+        return newHead
+    }
+
+    private func createEncodeModifiedNode(from node: List<(Int, T)>) -> List<Any> {
+        let newNode: List<Any>
+        if node.value.0 == 1 {
+            newNode = List<Any>(node.value.1)
+        } else {
+            newNode = List<Any>(node.value)
+        }
+
+        return newNode
     }
 }
