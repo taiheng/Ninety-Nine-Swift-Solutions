@@ -5,6 +5,7 @@ public func randomInt(under limit: Int) -> Int {
         return 0
     }
     #if os(Linux)
+        assert(limit != 0)
         srandom(UInt32(time(nil)))
         return random() % limit
     #else
